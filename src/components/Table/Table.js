@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 // Custom Imports
 import TableSortedBody from "./TableSortedBody";
+import { Checkbox, TableCell, TableRow } from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,6 +42,15 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+function TotalSum(rows) {
+  let total = 0;
+  console.log(rows, "rows of total");
+  rows.map((row, index) => {
+    total += parseInt(row.title);
+  });
+  return total;
+}
+
 const headCells = [
   {
     id: "user",
@@ -62,9 +72,9 @@ const headCells = [
   },
   {
     id: "title",
-    numeric: false,
-    disablePadding: true,
-    label: "Title",
+    numeric: true,
+    disablePadding: false,
+    label: "Count",
   },
   {
     id: "plan",
@@ -76,12 +86,11 @@ const headCells = [
 
 const EnhancedTable = (props) => {
   // props
-  const { StaticRows, data } = props;
+  const { rows, data, setRows } = props;
 
   // ** States
   const [dId, setDid] = useState(1);
   const [page, setPage] = useState(0);
-  const [rows, setRows] = useState(StaticRows);
   const [_, setRenderer] = useState(false);
   const [order, setOrder] = useState("asc");
   const [selected, setSelected] = useState([]);
@@ -94,8 +103,8 @@ const EnhancedTable = (props) => {
   const [planEditable, setPlanEditable] = useState([]);
 
   useEffect(() => {
-    setRows(StaticRows);
-  }, [StaticRows]);
+    setRows(rows);
+  }, [rows]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -198,10 +207,10 @@ const EnhancedTable = (props) => {
     });
 
   const handleBlur = async (event, row) => {
-    if (event.target.value !== row[event.target.name]) {
-      StaticRows[row.id] = { ...row, [event.target.name]: event.target.value };
+    if (event.target.value != row[event.target.name]) {
+      rows[row.id] = { ...row, [event.target.name]: event.target.value };
       ToastSuccess();
-      setRows(StaticRows);
+      setRows(rows);
     }
     setUserEditable([]);
     setRoleEditable([]);
@@ -238,6 +247,19 @@ const EnhancedTable = (props) => {
           handleRequestSort={handleRequestSort}
           handleSelectAllClick={handleSelectAllClick}
         />
+
+        <TableRow hover tabIndex={-1} role="checkbox">
+          {headCells.map((headCell, index) => {
+            return (
+              <TableCell
+                key={index}
+                sx={{ paddingRight: "140px", width: "25%" }}
+              >
+                {headCell.numeric && TotalSum(rows.slice(0, rowsPerPage))}
+              </TableCell>
+            );
+          })}
+        </TableRow>
 
         <TablePagination
           page={page}

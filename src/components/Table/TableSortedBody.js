@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 // ** MUI Imports
 import Box from "@mui/material/Box";
@@ -47,6 +47,10 @@ function EnhancedTableHead(props) {
     onSelectAllClick,
   } = props;
 
+  useEffect(() => {
+    setRows(rows);
+  }, [rows]);
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -85,8 +89,7 @@ function EnhancedTableHead(props) {
                 sx={{
                   position: "relative",
                 }}
-                align={headCell.numeric ? "right" : "left"}
-                padding={headCell.disablePadding ? "none" : "normal"}
+                padding={"none"}
                 sortDirection={orderBy === headCell.id ? order : false}
               >
                 <TableSortLabel

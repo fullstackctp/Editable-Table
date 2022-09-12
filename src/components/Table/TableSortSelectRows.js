@@ -60,7 +60,7 @@ function TableSortSelectRows(props) {
               id={labelId}
               scope="row"
               padding="none"
-              sx={{ maxWidth: "100px" }}
+              sx={{ maxWidth: "5px" }}
             >
               {!isUserEditable ? (
                 <Typography
@@ -140,7 +140,7 @@ function TableSortSelectRows(props) {
               id={labelId}
               scope="row"
               padding="none"
-              sx={{ width: "200px" }}
+              sx={{ minWidth: "100px" }}
             >
               {!isRoleEditable ? (
                 <Typography
@@ -165,7 +165,7 @@ function TableSortSelectRows(props) {
                   size="small"
                   variant="outlined"
                   id="outlined-basic"
-                  sx={{ minWidth: "85%" }}
+                  sx={{ minWidth: "50%" }}
                   value={formik.values.user_role_id}
                   onBlur={(event) => handleBlur(event, row)}
                   onChange={(event) => {
@@ -185,7 +185,7 @@ function TableSortSelectRows(props) {
               id={labelId}
               scope="row"
               padding="none"
-              sx={{ maxWidth: "100px" }}
+              sx={{ width: "20%" }}
             >
               {!isTitleEditable ? (
                 <Typography
@@ -203,13 +203,14 @@ function TableSortSelectRows(props) {
                 </Typography>
               ) : (
                 <TextField
+                  type={"number"}
                   label=""
                   autoFocus
                   name="title"
                   size="small"
                   id="outlined-basic"
                   variant="outlined"
-                  value={formik.values.title}
+                  value={parseInt(formik.values.title)}
                   onChange={formik.handleChange}
                   onBlur={(event) => handleBlur(event, row)}
                   onKeyDown={(event) =>

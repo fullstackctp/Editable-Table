@@ -56,12 +56,12 @@ export default function DeleteDialog({
 
   const handleDelete = () => {
     let newRows = [];
-    console.log(rows);
     rows.forEach((element, index) => {
       if (selected.indexOf(element.id) === -1) {
         newRows.push(element);
       }
     });
+
     setRows(newRows);
     setSelected([]);
     handleClose();

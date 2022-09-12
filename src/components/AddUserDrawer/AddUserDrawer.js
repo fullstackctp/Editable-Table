@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 // ** MUI Imports
+import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
@@ -10,7 +11,6 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 
@@ -64,25 +64,15 @@ const AddUserDrawer = (props) => {
   const onSubmit = async (values) => {
     toggle();
     values = { ...values, user_role_id: role, plan };
-    if (
-      values.email &&
-      values.user_role_id &&
-      values.user &&
-      values.plan &&
-      values.title
-    ) {
-      return;
-    }
-    const nextIndex = rows.slice(-1)[0].id + 1;
+
+    const nextIndex = rows.length > 0 ? rows.slice(-1)[0].id + 1 : 0;
     const row = {
       id: nextIndex,
-      user: "Jelly Bean",
       ...values,
     };
-    StaticRows.push(row);
-    console.log(StaticRows, "row is here of new");
-    setRows(StaticRows);
-    console.log(values, "values is here", values);
+    const Rows = [...rows];
+    Rows.push(row);
+    setRows(Rows);
     reset();
   };
 
@@ -163,6 +153,7 @@ const AddUserDrawer = (props) => {
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <TextField
+                    type={"number"}
                     value={value}
                     label="Title"
                     onChange={onChange}
@@ -236,6 +227,6 @@ const AddUserDrawer = (props) => {
       </Drawer>
     </>
   );
-};
+};;;;;;
 
 export default AddUserDrawer;

@@ -16,56 +16,28 @@ const createData = (id, user, email, user_role_id, title, plan) => {
 
 // Static Data for Table
 const StaticRows = [
-  createData(0, "Cupcake", "demo@gmail.com", "Editor", "Super Admin", "Basic"),
-  createData(
-    1,
-    "Donut",
-    "demo@gmail.com",
-    "User",
-    "Academic Coordinator",
-    "Basic"
-  ),
-  createData(
-    2,
-    "Eclair",
-    "demo@gmail.com",
-    "Editor",
-    "Director of Learning",
-    "Company"
-  ),
-  createData(
-    3,
-    "Frozen yoghurt",
-    "demo@gmail.com",
-    "User",
-    "Teacher",
-    "Enterprise"
-  ),
-  createData(4, "Gingerbread", "demo@gmail.com", "Admin", "Teacher", "Company"),
-  createData(
-    5,
-    "Honeycomb",
-    "demo@gmail.com",
-    "Editor",
-    "Director of Learning",
-    "Enterprise"
-  ),
-  createData(6, "Ice cream sandwich", "demo@gmail.com", "User", "N/A", "Team"),
-  createData(7, "Jelly Bean", "demo@gmail.com", "User", "Teacher", "Team"),
-  createData(8, "KitKat", "demo@gmail.com", "User", "Teacher", "Company"),
-  createData(9, "Lollipop", "demo@gmail.com", "User", "Teacher", "Company"),
-  createData(10, "Marshmallow", "demo@gmail.com", "User", "Teacher", "Company"),
-  createData(11, "Nougat", "demo@gmail.com", "Editor", "Teacher", "Basic"),
-  createData(12, "Oreo", "demo@gmail.com", "User", "Teacher", "Basic"),
+  createData(0, "Cupcake", "demo@gmail.com", "Editor", 1, "Basic"),
+  createData(1, "Donut", "demo@gmail.com", "User", 2, "Basic"),
+  createData(2, "Eclair", "demo@gmail.com", "Editor", 3, "Company"),
+  createData(3, "Frozen yoghurt", "demo@gmail.com", "User", 4, "Enterprise"),
+  createData(4, "Gingerbread", "demo@gmail.com", "Admin", 5, "Company"),
+  createData(5, "Honeycomb", "demo@gmail.com", "Editor", 6, "Enterprise"),
+  createData(6, "Ice cream sandwich", "demo@gmail.com", "User", 7, "Team"),
+  createData(7, "Jelly Bean", "demo@gmail.com", "User", 8, "Team"),
+  createData(8, "KitKat", "demo@gmail.com", "User", 9, "Company"),
+  createData(9, "Lollipop", "demo@gmail.com", "User", 10, "Company"),
+  createData(10, "Marshmallow", "demo@gmail.com", "User", 11, "Company"),
+  createData(11, "Nougat", "demo@gmail.com", "Editor", 12, "Basic"),
+  createData(12, "Oreo", "demo@gmail.com", "User", 13, "Basic"),
 ];
 
 const UsersTable = () => {
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(StaticRows);
   const [addUserOpen, setAddUserOpen] = useState(false);
 
   useEffect(() => {
-    setRows(StaticRows);
-  }, [rows, StaticRows]);
+    setRows(rows);
+  }, [rows]);
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen);
 
@@ -75,7 +47,7 @@ const UsersTable = () => {
         {rows.length > 0 && (
           <Grid item xs={12}>
             <Card sx={{ marginTop: "-8px" }}>
-              <Table StaticRows={rows} />
+              <Table rows={rows} setRows={setRows} />
             </Card>
           </Grid>
         )}
@@ -97,6 +69,21 @@ const UsersTable = () => {
             rows={rows}
             StaticRows={StaticRows}
           />
+
+          <Button
+            onClick={() => console.log(rows)}
+            sx={{
+              height: "42px",
+              minWidth: "170px",
+              fontSize: "14px",
+              marginLeft: 5,
+              whiteSpace: "nowrap",
+            }}
+            color="secondary"
+            variant="outlined"
+          >
+            Save
+          </Button>
         </Box>
       </Grid>
     </Grid>
